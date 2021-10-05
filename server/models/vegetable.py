@@ -1,9 +1,10 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 from typing import List
+
 
 class VegetableSchema(BaseModel):
     name: str = Field(...)
-    color: str = Field(...) # color: EmailStr
+    color: str = Field(...)  # color: EmailStr
     calories: str = Field(...)
     vitamins: List[str] = Field(...)
     season: List[str] = Field(...)

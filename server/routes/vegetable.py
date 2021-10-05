@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body
+from fastapi import Body
 from fastapi.encoders import jsonable_encoder
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter

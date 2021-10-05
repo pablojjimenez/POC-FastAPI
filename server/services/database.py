@@ -1,10 +1,19 @@
+from functools import lru_cache
 import motor.motor_asyncio
 from bson import ObjectId
 
-MONGO_DETAILS = "mongodb://localhost:27017"
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
-database = client.euroinnova_educalms
-vegetables_collection = database.get_collection("vegetables")
+from server.models.settings import Settings
+
+
+@lru_cache()
+def get_settings():
+    print('devuelvo settings')
+    return Settings()
+
+
+client = motor.motor_asyncio.AsyncIOMotorClient(get_settings().mongo_url)
+database = getattr(client, get_settings().db)
+vegetables_collection = database.get_collection(get_settings().colec)
 
 
 def convert_vegetable(veg) -> dict:
@@ -17,6 +26,7 @@ def convert_vegetable(veg) -> dict:
         "season": veg["season"],
         "origin": veg["origin"]
     }
+
 
 # CRUD Operation
 
