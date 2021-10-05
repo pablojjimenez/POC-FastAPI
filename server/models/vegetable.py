@@ -44,7 +44,8 @@ class UpdateVegetableModel(BaseModel):
 
 def VegetableModel(data, message):
     return {
-        "data": [data],
+        "data": data,
+        "size": len(data),
         "code": 200,
         "message": message,
     }

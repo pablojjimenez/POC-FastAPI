@@ -3,8 +3,8 @@ from bson import ObjectId
 
 MONGO_DETAILS = "mongodb://localhost:27017"
 client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
-database = client.students
-vegetables_collection = database.get_collection("euroinnova_educalms")
+database = client.euroinnova_educalms
+vegetables_collection = database.get_collection("vegetables")
 
 
 def convert_vegetable(veg) -> dict:
