@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from server.database import (
+from server.services.database import (
     get_vegetables,
     add_vegetable,
     get_vegetable,
@@ -18,11 +18,12 @@ from server.models.vegetable import (
 router = APIRouter()
 
 
-@router.post("/", response_description="Vegetable data added into the database")
+@router.post("/", response_description="Vegetable data added into the database", status_code=201)
 async def Sadd_vegetable_data(vegetable: VegetableSchema = Body(...)):
     vegetable = jsonable_encoder(vegetable)
     new_vegetable = await add_vegetable(vegetable)
     return VegetableModel(new_vegetable, "Vegetable added successfully.")
+
 
 @router.get("/", response_description="vegetables retrieved")
 async def Sget_vegetables():
@@ -39,6 +40,7 @@ async def Sget_vegetable_data(id):
         return VegetableModel(vegetable, "vegetable data retrieved successfully")
     return ErrorResponseModel("An error occurred.", 404, "vegetable doesn't exist.")
 
+
 @router.put("/{id}")
 async def Supdate_vegetable_data(id: str, req: UpdateVegetableModel = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
@@ -53,6 +55,7 @@ async def Supdate_vegetable_data(id: str, req: UpdateVegetableModel = Body(...))
         404,
         "There was an error updating the vegetable data.",
     )
+
 
 @router.delete("/{id}", response_description="vegetable data deleted from the database")
 async def Sdelete_vegetable_data(id: str):
