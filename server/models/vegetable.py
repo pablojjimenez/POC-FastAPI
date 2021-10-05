@@ -1,13 +1,12 @@
-from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
-
+from typing import List
 
 class VegetableSchema(BaseModel):
     name: str = Field(...)
-    color: EmailStr = Field(...)
+    color: str = Field(...) # color: EmailStr
     calories: str = Field(...)
-    vitamins: [str] = Field(...)
-    season: [str] = Field(...)
+    vitamins: List[str] = Field(...)
+    season: List[str] = Field(...)
     origin: str = Field(...)
 
     class Config:
@@ -37,12 +36,13 @@ class UpdateVegetableModel(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-
+                "name": "Tomato",
+                "calories": 33,
             }
         }
 
 
-def ResponseModel(data, message):
+def VegetableModel(data, message):
     return {
         "data": [data],
         "code": 200,
