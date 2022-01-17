@@ -1,3 +1,5 @@
+from dataclasses import Field
+
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
@@ -7,15 +9,18 @@ app = FastAPI()
 
 # app.include_router(VegetableRouter, tags=["vegetables"], prefix="/vegetables")
 
-class ItemTest:
-    def __init__(self, a, b):
-        self.ping = a
-        self.otro = b
+class ItemTest(BaseModel):
+    ping: str = ''
+    otro: int = 0
 
 
-@app.get("/ping", tags=["Test Connection"], response_model=ItemTest, description='abcderf')
+@app.get(
+    "/ping",
+    tags=["Test Connection"],
+    description='Endpoint for test connection'
+)
 async def read_root():
-    return ItemTest('png', 8)
+    return {'ping': 'pong'}
 
 
 @app.get("/casuas", tags=["defunciones-por-causas-capitulos-sexo-y-grupos-de-edad-ecm-identificador"])
